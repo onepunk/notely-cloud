@@ -1,0 +1,50 @@
+.grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  height: 100%;
+  min-height: 0;
+  align-items: stretch; /* Changed from 'start' to 'stretch' for full height */
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  align-self: stretch;
+  height: 100%;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--stroke);
+  padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-xl) var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.nav-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.nav-item-active {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+/* Right-hand content pane should be the only scrolling area */
+.content {
+  min-height: 0;
+  height: 100%; /* Ensure full height */
+  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+  background: var(--bg); /* Matches main content background */
+  overflow-y: auto;
+}

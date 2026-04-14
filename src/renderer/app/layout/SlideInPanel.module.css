@@ -1,0 +1,156 @@
+.panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background: var(--bg-sidebar);
+  box-shadow: none;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.left {
+  left: 0;
+  border-right: 1px solid var(--stroke);
+}
+
+.left.closed {
+  transform: translateX(-100%);
+}
+
+.left.open {
+  transform: translateX(0);
+}
+
+.right {
+  right: 0;
+  border-left: 1px solid var(--stroke);
+}
+
+.right.closed {
+  transform: translateX(100%);
+}
+
+.right.open {
+  transform: translateX(0);
+}
+
+/* Pinned state indicator */
+.pinned {
+  border-color: #4a4a4a;
+}
+
+.pinned.left {
+  border-right-width: 1px;
+  border-right-color: #4a4a4a;
+}
+
+.pinned.right {
+  border-left-width: 1px;
+  border-left-color: #4a4a4a;
+}
+
+/* Header bar */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--stroke);
+  flex-shrink: 0;
+  min-height: 44px;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.titleContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-left: auto;
+}
+
+.headerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.headerButton:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.headerButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Pin button active state - rotated 45 degrees when pinned */
+.headerButton.pinActive {
+  color: var(--accent);
+  transform: rotate(45deg);
+}
+
+.headerButton.pinActive:hover {
+  background: var(--bg-hover);
+  color: var(--accent);
+}
+
+.content {
+  position: relative;
+  flex: 1;
+  overflow: auto;
+  height: 100%;
+}
+
+.floatingPin {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+}
+
+/* Backdrop for mobile or when desired */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .panel {
+  box-shadow: none;
+}

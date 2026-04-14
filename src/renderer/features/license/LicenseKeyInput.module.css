@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.textarea {
+  min-height: 96px;
+  font-family: var(
+    --font-family-mono,
+    'JetBrains Mono',
+    'SFMono-Regular',
+    'Consolas',
+    'Liberation Mono',
+    monospace
+  );
+  letter-spacing: 0.02em;
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}

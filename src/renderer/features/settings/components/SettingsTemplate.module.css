@@ -1,0 +1,133 @@
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.metricStatus {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.metricDetail {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.metricValue {
+  font-size: 32px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.auditList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.auditItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs, 4px);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid transparent;
+}
+
+.auditItem:hover {
+  border-color: rgb(129 173 78 / 35%);
+}
+
+.auditTitle {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.auditMeta {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.channelList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.channelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: var(--bg-subtle);
+  transition: border-color 120ms ease, transform 120ms ease;
+}
+
+.channelRow:hover {
+  border-color: rgb(129 173 78 / 45%);
+  transform: translateY(-1px);
+}
+
+.channelDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs, 4px);
+}
+
+.channelTitle {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.channelDescription {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  max-width: 480px;
+}
+
+.dangerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.dangerButton {
+  background-color: rgb(209 52 56);
+  border-color: rgb(209 52 56);
+  color: #fff;
+}
+
+.dangerButton:hover {
+  background-color: rgb(174 31 34);
+  border-color: rgb(174 31 34);
+}
+
+@media (max-width: 640px) {
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}

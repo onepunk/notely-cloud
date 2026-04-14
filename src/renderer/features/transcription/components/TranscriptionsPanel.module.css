@@ -1,0 +1,146 @@
+.panel {
+  margin-top: 16px;
+  border-top: 1px solid var(--stroke, #e0e0e0);
+  padding-top: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-light, #132e2d);
+  margin-bottom: 4px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--stroke, #d0d7de);
+  border-radius: var(--radius-content, 6px);
+  padding: 12px;
+  background: var(--bg-container, #fff);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.row:hover {
+  border-color: var(--stroke, #d0d7de);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  transform: translateY(-1px);
+}
+
+.row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.meta {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--text-light, #132e2d);
+}
+
+.timestamp {
+  font-weight: 500;
+  color: var(--text-light, #132e2d);
+}
+
+.preview {
+  margin-top: 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--bg-subtle, #f6f8fa);
+}
+
+.preview-text {
+  font-size: 13px;
+  color: #586069;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-style: italic;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status.completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.processing {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.actions button {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid var(--stroke, #d0d7de);
+  border-radius: 4px;
+  background: var(--bg, #fff);
+  color: var(--text-light, #132e2d);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actions button:hover {
+  background: var(--bg-subtle, #f6f8fa);
+  border-color: var(--text-light, #132e2d);
+}
+
+.small {
+  color: #586069;
+  font-size: 12px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 24px 16px;
+  color: #586069;
+  font-size: 13px;
+}
+
+.empty-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  opacity: 0.5;
+}

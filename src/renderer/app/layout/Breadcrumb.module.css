@@ -1,0 +1,73 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  -webkit-app-region: no-drag;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.binderButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+  flex-shrink: 0;
+  font-size: inherit;
+  font-weight: 500;
+}
+
+.binderButton:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.binderName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.separator {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.link {
+  padding: 2px 6px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: inherit;
+  font-weight: 500;
+  transition: background-color 120ms ease, color 120ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.link:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.current {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}

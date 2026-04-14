@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.statusInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statusMessage {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.metaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaLabel {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+}
+
+.metaValue {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}

@@ -1,0 +1,187 @@
+/* Account Settings - Modern Minimal Design */
+
+.messageBar {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Authenticated User Card */
+.authenticatedCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgb(var(--brand-rgb) / 80%), rgb(var(--brand-rgb) / 60%));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userName {
+  color: var(--text-primary);
+}
+
+.userEmail {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.providerLabel {
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* Provider Selector */
+.providerSelector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.providerOption {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spacing-md);
+  background: var(--bg-container);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.providerOption:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-tertiary);
+}
+
+.providerSelected {
+  background: rgb(var(--brand-rgb) / 10%);
+  border-color: rgb(var(--brand-rgb) / 50%);
+}
+
+.providerSelected:hover {
+  background: rgb(var(--brand-rgb) / 15%);
+}
+
+.providerName {
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.providerDesc {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+/* Server URL Field */
+.serverUrlField {
+  margin-bottom: var(--spacing-md);
+}
+
+.serverUrlInput {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--stroke);
+  background: var(--bg-container);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  transition: border-color 0.15s ease;
+}
+
+.serverUrlInput:focus {
+  outline: none;
+  border-color: rgb(var(--brand-rgb) / 60%);
+}
+
+.serverUrlInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Sign In Button */
+.signInButton {
+  min-width: 120px;
+}
+
+.buttonWithSpinner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Profile Grid */
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.profileField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldLabel {
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 11px;
+}
+
+/* Language Row */
+.languageRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.languageDropdown {
+  min-width: 200px;
+}
+
+/* Loading */
+.loadingRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+/* Status Messages */
+.successText {
+  color: #3bb273;
+  margin-top: var(--spacing-sm);
+}
+
+.errorText {
+  color: #d13438;
+  margin-top: var(--spacing-sm);
+}

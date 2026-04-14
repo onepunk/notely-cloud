@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout A - Bottom Transcription Flyout</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e5e5e5;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app {
+      display: grid;
+      grid-template-rows: 44px 1fr 180px 56px;
+      height: 100vh;
+    }
+
+    /* Titlebar */
+    .titlebar {
+      background: #252525;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #b8f76f, #8bc34a);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #1a1a1a;
+      font-size: 14px;
+    }
+
+    .search-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search {
+      background: #333;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: #999;
+      width: 320px;
+      font-size: 13px;
+    }
+
+    .titlebar-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      background: #333;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: #e5e5e5;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: #b8f76f;
+      color: #1a1a1a;
+      border-color: #b8f76f;
+      font-weight: 500;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 8px;
+      margin-left: 12px;
+    }
+
+    .window-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .window-btn.close { background: #ff5f57; }
+    .window-btn.minimize { background: #ffbd2e; }
+    .window-btn.maximize { background: #28ca41; }
+
+    /* Main content */
+    .main {
+      display: grid;
+      grid-template-columns: 56px 220px 1fr;
+      overflow: hidden;
+    }
+
+    /* Icon rail */
+    .icon-rail {
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+      padding: 12px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.15s;
+    }
+
+    .icon-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .icon-btn.active {
+      background: rgba(184, 247, 111, 0.15);
+      color: #b8f76f;
+    }
+
+    .icon-divider {
+      width: 24px;
+      height: 1px;
+      background: #333;
+      margin: 8px 0;
+    }
+
+    .icon-rail-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Folder tree */
+    .folder-tree {
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+      padding: 16px 12px;
+      overflow-y: auto;
+    }
+
+    .folder-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      padding: 0 8px;
+    }
+
+    .folder-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 13px;
+    }
+
+    .folder-item:hover {
+      background: #2a2a2a;
+    }
+
+    .folder-item.active {
+      background: rgba(184, 247, 111, 0.12);
+      color: #b8f76f;
+    }
+
+    .folder-item.nested {
+      padding-left: 28px;
+    }
+
+    .folder-icon {
+      font-size: 16px;
+    }
+
+    .note-count {
+      margin-left: auto;
+      font-size: 11px;
+      color: #666;
+      background: #333;
+      padding: 2px 6px;
+      border-radius: 10px;
+    }
+
+    /* Editor area */
+    .editor-area {
+      display: flex;
+      justify-content: center;
+      padding: 32px;
+      overflow-y: auto;
+      background: #1a1a1a;
+    }
+
+    .editor {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .editor-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+      border: none;
+      background: transparent;
+      width: 100%;
+      outline: none;
+    }
+
+    .editor-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .editor-content {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #ccc;
+    }
+
+    .editor-content h2 {
+      font-size: 18px;
+      color: #fff;
+      margin: 24px 0 12px 0;
+    }
+
+    .editor-content ul {
+      margin-left: 20px;
+    }
+
+    .editor-content li {
+      margin: 8px 0;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      gap: 4px;
+      padding: 8px;
+      background: #252525;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .toolbar-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .toolbar-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    /* Transcription flyout */
+    .transcription-flyout {
+      background: #1f1f1f;
+      border-top: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flyout-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #333;
+      gap: 12px;
+    }
+
+    .flyout-handle {
+      width: 40px;
+      height: 4px;
+      background: #444;
+      border-radius: 2px;
+      cursor: ns-resize;
+    }
+
+    .flyout-title {
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .recording-indicator {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .flyout-time {
+      color: #888;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    .flyout-tabs {
+      display: flex;
+      gap: 4px;
+      margin-left: auto;
+    }
+
+    .flyout-tab {
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .flyout-tab.active {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .flyout-close {
+      color: #666;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .flyout-content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #bbb;
+    }
+
+    .transcript-line {
+      margin-bottom: 12px;
+    }
+
+    .transcript-time {
+      color: #666;
+      font-size: 11px;
+      font-family: monospace;
+      margin-right: 8px;
+    }
+
+    .transcript-live {
+      background: rgba(184, 247, 111, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border-left: 2px solid #b8f76f;
+    }
+
+    /* Footer */
+    .footer {
+      background: #252525;
+      border-top: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+    }
+
+    .record-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #b8f76f;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #1a1a1a;
+      box-shadow: 0 2px 8px rgba(184, 247, 111, 0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .record-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(184, 247, 111, 0.4);
+    }
+
+    .record-btn.recording {
+      background: #ef4444;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Label */
+    .layout-label {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background: #b8f76f;
+      color: #1a1a1a;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="logo">N</div>
+      <div class="search-container">
+        <input type="text" class="search" placeholder="Search notes, transcriptions, tags...">
+      </div>
+      <div class="titlebar-actions">
+        <button class="btn btn-primary">+ New Note</button>
+        <button class="btn">Menu</button>
+        <div class="window-controls">
+          <div class="window-btn minimize"></div>
+          <div class="window-btn maximize"></div>
+          <div class="window-btn close"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Icon rail -->
+      <div class="icon-rail">
+        <div class="icon-btn active">🏠</div>
+        <div class="icon-btn">📅</div>
+        <div class="icon-btn">⭐</div>
+        <div class="icon-btn">📥</div>
+        <div class="icon-btn">🗑️</div>
+        <div class="icon-divider"></div>
+        <div class="icon-btn">+</div>
+        <div class="icon-rail-bottom">
+          <div class="icon-divider"></div>
+          <div class="icon-btn">⚙️</div>
+        </div>
+      </div>
+
+      <!-- Folder tree -->
+      <div class="folder-tree">
+        <div class="folder-header">Binders</div>
+        <div class="folder-item active">
+          <span class="folder-icon">📁</span>
+          <span>Work</span>
+          <span class="note-count">12</span>
+        </div>
+        <div class="folder-item nested">
+          <span class="folder-icon">📄</span>
+          <span>Team Sync</span>
+        </div>
+        <div class="folder-item nested">
+          <span class="folder-icon">📄</span>
+          <span>Q1 Planning</span>
+        </div>
+        <div class="folder-item">
+          <span class="folder-icon">📁</span>
+          <span>Personal</span>
+          <span class="note-count">8</span>
+        </div>
+        <div class="folder-item nested">
+          <span class="folder-icon">📄</span>
+          <span>Ideas</span>
+        </div>
+        <div class="folder-item">
+          <span class="folder-icon">📁</span>
+          <span>Research</span>
+          <span class="note-count">5</span>
+        </div>
+        <div class="folder-item nested">
+          <span class="folder-icon">📄</span>
+          <span>AI Papers</span>
+        </div>
+
+        <div class="folder-header" style="margin-top: 24px;">Tags</div>
+        <div class="folder-item">
+          <span class="folder-icon">🏷️</span>
+          <span>#important</span>
+        </div>
+        <div class="folder-item">
+          <span class="folder-icon">🏷️</span>
+          <span>#followup</span>
+        </div>
+        <div class="folder-item">
+          <span class="folder-icon">🏷️</span>
+          <span>#ai-research</span>
+        </div>
+      </div>
+
+      <!-- Editor -->
+      <div class="editor-area">
+        <div class="editor">
+          <div class="editor-toolbar">
+            <div class="toolbar-btn">B</div>
+            <div class="toolbar-btn">I</div>
+            <div class="toolbar-btn">U</div>
+            <div class="toolbar-btn">S</div>
+            <div class="toolbar-btn">H1</div>
+            <div class="toolbar-btn">H2</div>
+            <div class="toolbar-btn">•</div>
+            <div class="toolbar-btn">1.</div>
+            <div class="toolbar-btn">✓</div>
+            <div class="toolbar-btn">" "</div>
+            <div class="toolbar-btn">&lt;/&gt;</div>
+          </div>
+          <input type="text" class="editor-title" value="Weekly Team Sync">
+          <div class="editor-meta">
+            <span>📁 Work / Meetings</span>
+            <span>Jan 23, 2026</span>
+            <span>1,234 words</span>
+          </div>
+          <div class="editor-content">
+            <p>Quick sync with the team to review Q1 progress and upcoming milestones.</p>
+
+            <h2>Attendees</h2>
+            <ul>
+              <li>Sarah Chen (Engineering Lead)</li>
+              <li>Mike Roberts (Product)</li>
+              <li>Alex Kim (Design)</li>
+              <li>Jordan Lee (QA)</li>
+            </ul>
+
+            <h2>Key Decisions</h2>
+            <ul>
+              <li>Moving forward with TypeScript migration</li>
+              <li>New CI/CD pipeline approved for next sprint</li>
+              <li>Design review scheduled for Friday</li>
+            </ul>
+
+            <h2>Action Items</h2>
+            <ul>
+              <li>☐ Sarah: Draft API spec by Friday</li>
+              <li>☐ Mike: Update product roadmap</li>
+              <li>☐ Alex: Finalize component library</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transcription flyout -->
+    <div class="transcription-flyout">
+      <div class="flyout-header">
+        <div class="flyout-handle"></div>
+        <div class="flyout-title">
+          <div class="recording-indicator"></div>
+          Transcription
+        </div>
+        <span class="flyout-time">05:23</span>
+        <div class="flyout-tabs">
+          <div class="flyout-tab active">Transcript</div>
+          <div class="flyout-tab">Summary</div>
+        </div>
+        <span class="flyout-close">×</span>
+      </div>
+      <div class="flyout-content">
+        <div class="transcript-line">
+          <span class="transcript-time">[00:00]</span>
+          "Alright everyone, let's get started with our weekly sync. First up, I want to review where we are on the TypeScript migration."
+        </div>
+        <div class="transcript-line">
+          <span class="transcript-time">[00:45]</span>
+          "Thanks Sarah. The migration is going well - we've converted about 60% of the core modules. The main blocker right now is the API layer."
+        </div>
+        <div class="transcript-line">
+          <span class="transcript-time">[02:15]</span>
+          "Mike, can you walk us through the product timeline? We need to make sure the migration doesn't impact our Q1 deliverables."
+        </div>
+        <div class="transcript-line transcript-live">
+          <span class="transcript-time">[05:20]</span>
+          "The main concern is making sure we have enough buffer for testing. I'd recommend we add an extra sprint before the release..."
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <button class="record-btn recording">⏹</button>
+    </div>
+
+    <div class="layout-label">Layout A: Bottom Flyout</div>
+  </div>
+</body>
+</html>

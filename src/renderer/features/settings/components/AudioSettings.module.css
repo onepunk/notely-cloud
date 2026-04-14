@@ -1,0 +1,167 @@
+/* Audio Settings */
+
+/* Devices Grid */
+.devicesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 640px) {
+  .devicesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Device Row */
+.deviceRow {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.deviceDropdown {
+  flex: 1;
+  max-width: 360px;
+}
+
+/* Device Card Footer — pushes meter + button to the bottom of the card */
+.deviceCardFooter {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.deviceCardFooterActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Test Meter */
+.testMeter {
+  height: 4px;
+  background: var(--bg-subtle);
+  border-radius: 2px;
+  margin-top: var(--spacing-md);
+  overflow: hidden;
+}
+
+.testMeterFill {
+  height: 100%;
+  background: var(--brand-secondary);
+  border-radius: 2px;
+  transform-origin: left;
+  transition: transform 0.1s ease;
+}
+
+/* Switch Stack */
+.switchStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.switchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.switchRow:hover {
+  background: var(--bg-hover);
+}
+
+.switchLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.switchDesc {
+  color: var(--text-secondary);
+}
+
+/* Error Text */
+.errorText {
+  color: #d13438;
+  margin-top: var(--spacing-sm);
+}
+
+/* Advanced Transcription */
+.advancedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md, 16px) var(--spacing-lg, 24px);
+}
+
+@media (max-width: 640px) {
+  .advancedGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.advancedFullRow {
+  grid-column: 1 / -1;
+}
+
+.subsectionTitle {
+  grid-column: 1 / -1;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-top: var(--spacing-sm, 8px);
+  border-top: 1px solid var(--bg-hover, rgba(0, 0, 0, 0.06));
+  margin: 0;
+}
+
+.subsectionTitle:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.advancedInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs, 8px);
+  min-width: 0;
+}
+
+.advancedInputLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.advancedInputField {
+  width: 100%;
+}
+
+.advancedInputDescription {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.advancedUnit {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.advancedCheckboxGroup {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs, 8px);
+}
+
+.advancedHintText {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--text-secondary);
+  line-height: 1.4;
+  padding-left: 32px;
+}

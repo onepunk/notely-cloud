@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notely Desktop - UI Layout Options</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0d0d0d;
+      color: #e5e5e5;
+      min-height: 100vh;
+      padding: 48px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #b8f76f, #8bc34a);
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #1a1a1a;
+      font-size: 32px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #333;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-preview {
+      height: 280px;
+      background: #252525;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-preview iframe {
+      width: 200%;
+      height: 200%;
+      border: none;
+      transform: scale(0.5);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+
+    .card-content {
+      padding: 24px;
+    }
+
+    .card-label {
+      display: inline-block;
+      background: rgba(184, 247, 111, 0.15);
+      color: #b8f76f;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .card-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .feature-tag {
+      background: #252525;
+      color: #ccc;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #b8f76f;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    .comparison {
+      max-width: 1400px;
+      margin: 64px auto 0;
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid #333;
+    }
+
+    .comparison h2 {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+
+    .comparison-table th {
+      color: #888;
+      font-weight: 500;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .comparison-table td {
+      font-size: 14px;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table .layout-name {
+      font-weight: 600;
+      color: #b8f76f;
+    }
+
+    .recommendation {
+      max-width: 1400px;
+      margin: 32px auto 0;
+      background: linear-gradient(135deg, rgba(184, 247, 111, 0.1), rgba(139, 195, 74, 0.05));
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid rgba(184, 247, 111, 0.2);
+    }
+
+    .recommendation h2 {
+      font-size: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .recommendation p {
+      font-size: 15px;
+      color: #bbb;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .recommendation strong {
+      color: #b8f76f;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">N</div>
+    <h1>UI Layout Options</h1>
+    <p class="subtitle">Explore different layout concepts for Notely Desktop. Each option offers a unique approach to organizing navigation, note editing, and live transcription.</p>
+  </div>
+
+  <div class="grid">
+    <!-- Layout A -->
+    <div class="card">
+      <div class="card-preview">
+        <iframe src="layout-a-bottom-flyout.html"></iframe>
+      </div>
+      <div class="card-content">
+        <span class="card-label">Option A</span>
+        <h3 class="card-title">Bottom Transcription Flyout</h3>
+        <p class="card-description">Icon rail + folder tree on the left, with transcription in a resizable bottom panel. Maximizes horizontal editor space during meetings.</p>
+        <div class="card-features">
+          <span class="feature-tag">48px Icon Rail</span>
+          <span class="feature-tag">Folder Tree</span>
+          <span class="feature-tag">Bottom Dock</span>
+          <span class="feature-tag">Resizable</span>
+        </div>
+        <a href="layout-a-bottom-flyout.html" class="card-link" target="_blank">View Full Mockup →</a>
+      </div>
+    </div>
+
+    <!-- Layout B -->
+    <div class="card">
+      <div class="card-preview">
+        <iframe src="layout-b-floating-widget.html"></iframe>
+      </div>
+      <div class="card-content">
+        <span class="card-label">Option B</span>
+        <h3 class="card-title">Floating Transcription Widget</h3>
+        <p class="card-description">Unified sidebar with binders and tags. Transcription appears as a moveable floating widget over the editor, minimizing when not needed.</p>
+        <div class="card-features">
+          <span class="feature-tag">Unified Sidebar</span>
+          <span class="feature-tag">Floating Widget</span>
+          <span class="feature-tag">Audio Footer</span>
+          <span class="feature-tag">Minimal UI</span>
+        </div>
+        <a href="layout-b-floating-widget.html" class="card-link" target="_blank">View Full Mockup →</a>
+      </div>
+    </div>
+
+    <!-- Layout C -->
+    <div class="card">
+      <div class="card-preview">
+        <iframe src="layout-c-three-panel.html"></iframe>
+      </div>
+      <div class="card-content">
+        <span class="card-label">Option C</span>
+        <h3 class="card-title">Three-Panel with Bottom Dock</h3>
+        <p class="card-description">Classic three-panel layout with icon rail, notes list, and editor. Bottom dock shows transcript and AI summary side-by-side.</p>
+        <div class="card-features">
+          <span class="feature-tag">Icon Rail</span>
+          <span class="feature-tag">Notes List</span>
+          <span class="feature-tag">Breadcrumbs</span>
+          <span class="feature-tag">Split Dock</span>
+        </div>
+        <a href="layout-c-three-panel.html" class="card-link" target="_blank">View Full Mockup →</a>
+      </div>
+    </div>
+
+    <!-- Layout D -->
+    <div class="card">
+      <div class="card-preview">
+        <iframe src="layout-d-focus-mode.html"></iframe>
+      </div>
+      <div class="card-content">
+        <span class="card-label">Option D</span>
+        <h3 class="card-title">Focus Mode with Slide Panels</h3>
+        <p class="card-description">Distraction-free editor by default. Binders slide in from left, transcription slides in from right. Toggle via bottom toolbar.</p>
+        <div class="card-features">
+          <span class="feature-tag">Focus Mode</span>
+          <span class="feature-tag">Slide Panels</span>
+          <span class="feature-tag">Bottom Toolbar</span>
+          <span class="feature-tag">Centered Title</span>
+        </div>
+        <a href="layout-d-focus-mode.html" class="card-link" target="_blank">View Full Mockup →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison">
+    <h2>Feature Comparison</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Option A</th>
+          <th>Option B</th>
+          <th>Option C</th>
+          <th>Option D</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Navigation Style</td>
+          <td class="layout-name">Icon rail + folder tree</td>
+          <td class="layout-name">Unified sidebar</td>
+          <td class="layout-name">Icon rail + breadcrumbs</td>
+          <td class="layout-name">Hidden (on-demand)</td>
+        </tr>
+        <tr>
+          <td>Transcription Position</td>
+          <td>Bottom flyout</td>
+          <td>Floating widget</td>
+          <td>Bottom dock (toggleable)</td>
+          <td>Right slide-in panel</td>
+        </tr>
+        <tr>
+          <td>Best For</td>
+          <td>Meeting-focused use</td>
+          <td>Casual note-takers</td>
+          <td>Flexible workflows</td>
+          <td>Focused writing</td>
+        </tr>
+        <tr>
+          <td>Implementation Complexity</td>
+          <td>Medium</td>
+          <td>Low</td>
+          <td>High</td>
+          <td>Medium</td>
+        </tr>
+        <tr>
+          <td>Screen Efficiency</td>
+          <td>Good</td>
+          <td>Best (when idle)</td>
+          <td>Good</td>
+          <td>Best (default)</td>
+        </tr>
+        <tr>
+          <td>Live Transcript Visibility</td>
+          <td>Always visible when open</td>
+          <td>Compact until expanded</td>
+          <td>Always visible when open</td>
+          <td>Panel must be toggled</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="recommendation">
+    <h2>💡 Recommendations</h2>
+    <p><strong>For meeting-focused use:</strong> Option A (Bottom Flyout) keeps transcription visible without splitting horizontal editor space, and the folder view is always accessible.</p>
+    <p><strong>For versatility:</strong> Option C (Three-Panel with Dock) offers the most flexibility, letting users dock transcription bottom OR right based on preference.</p>
+    <p><strong>For simplicity:</strong> Option B (Floating Widget) maintains a familiar feel but makes transcription less intrusive.</p>
+    <p><strong>For deep work:</strong> Option D (Focus Mode) provides maximum writing focus with contextual panels that appear only when needed.</p>
+  </div>
+</body>
+</html>

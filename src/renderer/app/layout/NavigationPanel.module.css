@@ -1,0 +1,103 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-sidebar);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.quickViewsSection {
+  flex-shrink: 0;
+}
+
+.divider {
+  height: 1px;
+  background: var(--stroke);
+  margin: var(--spacing-xs) 0;
+  flex-shrink: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Notes view styles */
+.notesView {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.notesHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--stroke);
+  flex-shrink: 0;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: var(--bg-subtle);
+  border: 1px solid var(--stroke);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.backButton:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.backButton:active {
+  background: var(--bg-container);
+}
+
+/* Visual feedback when dragging a note over the back button */
+.backButton.dragOver {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px dashed var(--accent);
+}
+
+.notesTitle {
+  margin: 0;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.notesListContainer {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

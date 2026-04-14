@@ -1,0 +1,302 @@
+/**
+ * SetupScreen styles
+ * Full-screen setup experience for first-run component download
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--colorNeutralBackground1, #fafafa);
+  color: var(--colorNeutralForeground1, #242424);
+  font-family: var(--fontFamilyBase, system-ui, -apple-system, sans-serif);
+}
+
+.logo {
+  width: 64px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--colorNeutralForeground2, #616161);
+  margin: 0;
+}
+
+.errorBanner {
+  background: var(--colorPaletteRedBackground2, #fde7e9);
+  color: var(--colorPaletteRedForeground1, #a4262c);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.componentList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+}
+
+.componentRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1rem;
+  background: var(--colorNeutralBackground2, #f5f5f5);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.componentReady {
+  background: var(--colorPaletteGreenBackground1, #dff6dd);
+}
+
+.componentError {
+  background: var(--colorPaletteRedBackground1, #fde7e9);
+}
+
+.componentIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--colorNeutralForeground3, #707070);
+  flex-shrink: 0;
+}
+
+.componentReady .componentIcon {
+  color: var(--colorPaletteGreenForeground1, #107c10);
+}
+
+.componentError .componentIcon {
+  color: var(--colorPaletteRedForeground1, #a4262c);
+}
+
+.componentIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.emptyIcon {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--colorNeutralStroke1, #d1d1d1);
+  border-radius: 50%;
+}
+
+.componentName {
+  flex: 1;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.componentStatus {
+  font-size: 0.8125rem;
+  color: var(--colorNeutralForeground3, #707070);
+  flex-shrink: 0;
+}
+
+.componentReady .componentStatus {
+  color: var(--colorPaletteGreenForeground1, #107c10);
+}
+
+.componentError .componentStatus {
+  color: var(--colorPaletteRedForeground1, #a4262c);
+}
+
+.progressSection {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+}
+
+.progressBarContainer {
+  height: 8px;
+  background: var(--colorNeutralBackground4, #e0e0e0);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #7cb342, #b8e986);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progressInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  color: var(--colorNeutralForeground3, #707070);
+}
+
+.actions {
+  margin-bottom: 1.5rem;
+}
+
+.retryButton {
+  padding: 0.625rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  background: var(--colorBrandBackground, #0078d4);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.retryButton:hover {
+  background: var(--colorBrandBackgroundHover, #006cbe);
+}
+
+.retryButton:active {
+  background: var(--colorBrandBackgroundPressed, #005a9e);
+}
+
+.continueButton {
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--colorBrandBackground, #0078d4);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.continueButton:hover {
+  background: var(--colorBrandBackgroundHover, #006cbe);
+  transform: translateY(-1px);
+}
+
+.continueButton:active {
+  background: var(--colorBrandBackgroundPressed, #005a9e);
+  transform: translateY(0);
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--colorNeutralForeground3, #707070);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Indeterminate progress bar - uses Notely brand green */
+.indeterminateBar {
+  width: 200px;
+  height: 4px;
+  background: var(--colorNeutralBackground4, #e0e0e0);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.indeterminateBar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, #7cb342, #b8e986, #7cb342);
+  border-radius: 2px;
+  animation: indeterminate 1.5s ease-in-out infinite;
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Small spinner for component rows */
+.spinnerSmall {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--colorNeutralStroke1, #d1d1d1);
+  border-top-color: #7cb342;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: var(--colorNeutralBackground1, #1f1f1f);
+    color: var(--colorNeutralForeground1, #ffffff);
+  }
+
+  .componentRow {
+    background: var(--colorNeutralBackground2, #2d2d2d);
+  }
+
+  .componentReady {
+    background: var(--colorPaletteGreenBackground2, #1a3d1a);
+  }
+
+  .componentError {
+    background: var(--colorPaletteRedBackground2, #442726);
+  }
+
+  .componentReady .componentIcon,
+  .componentReady .componentStatus {
+    color: var(--colorPaletteGreenForeground1, #54b054);
+  }
+
+  .componentError .componentIcon,
+  .componentError .componentStatus {
+    color: var(--colorPaletteRedForeground1, #f1707b);
+  }
+
+  .errorBanner {
+    background: var(--colorPaletteRedBackground2, #442726);
+    color: var(--colorPaletteRedForeground1, #f1707b);
+  }
+
+  .indeterminateBar {
+    background: var(--colorNeutralBackground4, #3d3d3d);
+  }
+
+  .progressBarContainer {
+    background: var(--colorNeutralBackground4, #3d3d3d);
+  }
+}

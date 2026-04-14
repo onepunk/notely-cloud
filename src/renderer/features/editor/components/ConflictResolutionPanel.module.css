@@ -1,0 +1,142 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-lg);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.warningIcon {
+  color: #dc2626;
+}
+
+.headerSpacer {
+  flex: 1;
+}
+
+.conflictInfo {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: rgb(254 243 199 / 30%);
+  border: 1px solid rgb(251 191 36 / 30%);
+  border-radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .conflictInfo {
+    background: rgb(120 53 15 / 20%);
+    border-color: rgb(146 64 14 / 30%);
+  }
+}
+
+.conflictDescription {
+  color: var(--text-secondary);
+}
+
+.conflictList {
+  margin-bottom: var(--spacing-lg);
+}
+
+.sectionTitle {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+.tabs {
+  margin-bottom: var(--spacing-md);
+}
+
+.contentComparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.contentCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-container);
+  border: 1px solid var(--stroke);
+}
+
+.conflictCard {
+  border-color: rgb(254 202 202 / 50%);
+  background: rgb(254 242 242 / 20%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .conflictCard {
+    border-color: rgb(153 27 27 / 30%);
+    background: rgb(127 29 29 / 10%);
+  }
+}
+
+.cardTitle {
+  color: var(--text-primary);
+}
+
+.cardDescription {
+  color: var(--text-secondary);
+}
+
+.contentPreview {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--spacing-md);
+}
+
+.contentText {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--stroke);
+}
+
+.loading,
+.error,
+.noConflicts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.noConflicts {
+  color: #16a34a;
+}

@@ -1,0 +1,214 @@
+.dialogSurface {
+  max-width: 800px;
+  width: 90vw;
+  max-height: 90vh;
+}
+
+.dialogContent {
+  overflow-y: auto;
+  max-height: calc(90vh - 150px);
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl);
+}
+
+.message {
+  margin-bottom: var(--spacing-md);
+}
+
+.diagnosticsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.section {
+  background: var(--bg-container);
+  border: 1px solid var(--stroke);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.dataTable {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.dataRow {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--stroke-subtle);
+}
+
+.dataRow:last-child {
+  border-bottom: none;
+}
+
+.dataLabel {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.dataValue {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  word-break: break-word;
+}
+
+.monospace {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+}
+
+.featureList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-xs);
+}
+
+.featureItem {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--stroke-subtle);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.featureItem::before {
+  content: '✓ ';
+  color: var(--color-success);
+  font-weight: var(--font-weight-bold);
+}
+
+.emptyState {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: var(--spacing-sm) 0;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.historyItem {
+  padding: var(--spacing-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--stroke-subtle);
+  border-radius: var(--border-radius-sm);
+}
+
+.historyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.historyStatus {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  padding: 2px 8px;
+  border-radius: var(--border-radius-sm);
+}
+
+.historySuccess {
+  background: var(--color-success-background);
+  color: var(--color-success);
+}
+
+.historyFailure {
+  background: var(--color-error-background);
+  color: var(--color-error);
+}
+
+.historyTime {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.historyDetails {
+  display: flex;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.historyError {
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  background: var(--color-error-background);
+  border-left: 3px solid var(--color-error);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+}
+
+.errorList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.errorItem {
+  padding: var(--spacing-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--stroke-subtle);
+  border-left: 3px solid var(--color-error);
+  border-radius: var(--border-radius-sm);
+}
+
+.errorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.errorLevel {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+  padding: 2px 6px;
+  background: var(--color-error-background);
+  color: var(--color-error);
+  border-radius: var(--border-radius-sm);
+}
+
+.errorTime {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.errorMessage {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.errorContext {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-family: var(--font-family-mono);
+  padding: var(--spacing-xs);
+  background: var(--bg-container);
+  border-radius: var(--border-radius-sm);
+}

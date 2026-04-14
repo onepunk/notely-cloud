@@ -1,0 +1,77 @@
+/* License Status Row - Compact Display */
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke);
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+.statusSection {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.statusActive {
+  background: rgb(59 178 115 / 15%);
+  color: #3bb273;
+}
+
+.statusExpiring {
+  background: rgb(255 185 0 / 15%);
+  color: #c19c00;
+}
+
+.statusExpired {
+  background: rgb(209 52 56 / 15%);
+  color: #d13438;
+}
+
+.statusInvalid {
+  background: rgb(209 52 56 / 15%);
+  color: #d13438;
+}
+
+.statusUnlicensed {
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+}
+
+.typeLabel {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.separator {
+  color: var(--text-tertiary);
+  font-size: 10px;
+}
+
+.expiryText {
+  color: var(--text-secondary);
+}
+
+.manageButton {
+  flex-shrink: 0;
+}

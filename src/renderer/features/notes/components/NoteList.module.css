@@ -1,0 +1,208 @@
+.root {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden auto;
+  background: var(--bg-sidebar);
+  box-sizing: border-box;
+
+  /* Auto-hide scrollbar */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: transparent transparent; /* Firefox - initially transparent */
+}
+
+/* Chrome, Safari, Edge - Auto-hide scrollbar */
+.root::-webkit-scrollbar {
+  width: 8px;
+}
+
+.root::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.root::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+/* Show scrollbar on hover or while scrolling */
+.root:hover::-webkit-scrollbar-thumb {
+  background: rgb(0 0 0 / 30%);
+}
+
+.root::-webkit-scrollbar-thumb:active {
+  background: rgb(0 0 0 / 50%);
+}
+
+/* Firefox - Show scrollbar on hover */
+.root:hover {
+  scrollbar-color: rgb(0 0 0 / 30%) transparent;
+}
+
+/* Show scrollbar while scrolling */
+.root.scrolling::-webkit-scrollbar-thumb {
+  background: rgb(0 0 0 / 40%);
+}
+
+.root.scrolling {
+  scrollbar-color: rgb(0 0 0 / 40%) transparent;
+}
+
+/* Dark mode scrollbar adjustments */
+@media (prefers-color-scheme: dark) {
+  .root:hover::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 30%);
+  }
+
+  .root::-webkit-scrollbar-thumb:active {
+    background: rgb(255 255 255 / 50%);
+  }
+
+  .root:hover {
+    scrollbar-color: rgb(255 255 255 / 30%) transparent;
+  }
+
+  .root.scrolling::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 40%);
+  }
+
+  .root.scrolling {
+    scrollbar-color: rgb(255 255 255 / 40%) transparent;
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--bg-sidebar);
+  text-decoration: none;
+  display: block;
+  position: relative;
+  border-bottom: 1px solid var(--stroke-light);
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: var(--bg-hover);
+}
+
+.item-active {
+  background: var(--bg);
+  border-left: 3px solid var(--brand-primary);
+  padding-left: calc(var(--spacing-lg) - 3px);
+}
+
+.item-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.item-title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.time {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+}
+
+.star-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.star-button:hover {
+  color: var(--text-primary);
+}
+
+.star-button:active {
+  transform: scale(0.95);
+}
+
+.item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.tag-more {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  padding: 2px 6px;
+}
+
+.indicators-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.transcription-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Conflict indicator (Phase 5) */
+.conflict-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dc2626;
+  font-size: 12px;
+  flex-shrink: 0;
+}

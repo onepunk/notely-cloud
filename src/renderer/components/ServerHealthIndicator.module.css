@@ -1,0 +1,40 @@
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  transition: all 0.2s ease;
+}
+
+.indicatorOnline {
+  background-color: var(--color-success-bg);
+  color: var(--color-success-fg);
+}
+
+.indicatorOffline {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-fg);
+}
+
+.statusText {
+  font-weight: 500;
+}
+
+.errorText {
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+}
+
+.iconOnline {
+  color: var(--color-success-fg);
+}
+
+.iconOffline {
+  color: var(--color-error-fg);
+}
+
+.iconUnknown {
+  color: var(--text-secondary);
+}

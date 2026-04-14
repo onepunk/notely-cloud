@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout D - Focus Mode with Contextual Panels</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e5e5e5;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app {
+      display: grid;
+      grid-template-rows: 48px 1fr 52px;
+      height: 100vh;
+    }
+
+    /* Titlebar */
+    .titlebar {
+      background: #1f1f1f;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .titlebar-center {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .nav-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .breadcrumb-item {
+      cursor: pointer;
+    }
+
+    .breadcrumb-item:hover {
+      color: #e5e5e5;
+    }
+
+    .breadcrumb-item.active {
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .breadcrumb-sep {
+      color: #555;
+    }
+
+    .titlebar-right {
+      position: absolute;
+      right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .record-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(239, 68, 68, 0.15);
+      border-radius: 16px;
+      font-size: 12px;
+      color: #ef4444;
+    }
+
+    .record-dot {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .titlebar-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .titlebar-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 8px;
+      margin-left: 8px;
+    }
+
+    .window-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .window-btn.close { background: #ff5f57; }
+    .window-btn.minimize { background: #ffbd2e; }
+    .window-btn.maximize { background: #28ca41; }
+
+    /* Main content */
+    .main {
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Side panel (binders) */
+    .side-panel {
+      width: 280px;
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .panel-header {
+      padding: 16px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .panel-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .panel-close:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .binder-group {
+      margin-bottom: 8px;
+    }
+
+    .binder-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 13px;
+    }
+
+    .binder-item:hover {
+      background: #2a2a2a;
+    }
+
+    .binder-item.active {
+      background: rgba(184, 247, 111, 0.12);
+      color: #b8f76f;
+    }
+
+    .binder-icon {
+      font-size: 16px;
+    }
+
+    .binder-badge {
+      margin-left: auto;
+      font-size: 11px;
+      color: #666;
+      background: #333;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .binder-children {
+      margin-left: 24px;
+      border-left: 1px solid #333;
+      padding-left: 8px;
+    }
+
+    .note-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .note-link:hover {
+      background: #2a2a2a;
+      color: #ccc;
+    }
+
+    .note-link.active {
+      color: #b8f76f;
+    }
+
+    /* Editor area */
+    .editor-area {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 48px 32px;
+      overflow-y: auto;
+      background: #1a1a1a;
+      margin-left: 280px;
+    }
+
+    .editor-area.full {
+      margin-left: 0;
+    }
+
+    .editor {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .editor-title {
+      font-size: 36px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+      border: none;
+      background: transparent;
+      width: 100%;
+      outline: none;
+      text-align: center;
+    }
+
+    .editor-meta {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .editor-content {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #ccc;
+    }
+
+    .editor-content h2 {
+      font-size: 22px;
+      color: #fff;
+      margin: 40px 0 16px 0;
+      font-weight: 600;
+    }
+
+    .editor-content p {
+      margin-bottom: 20px;
+    }
+
+    .editor-content ul {
+      margin-left: 24px;
+      margin-bottom: 20px;
+    }
+
+    .editor-content li {
+      margin: 12px 0;
+    }
+
+    /* Right panel (transcription) */
+    .right-panel {
+      width: 380px;
+      background: #1f1f1f;
+      border-left: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .transcript-header {
+      padding: 16px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .transcript-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .transcript-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .transcript-time {
+      font-size: 12px;
+      color: #888;
+      font-family: monospace;
+      margin-left: auto;
+    }
+
+    .transcript-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .transcript-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .transcript-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .transcript-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .transcript-line {
+      margin-bottom: 16px;
+      padding-left: 56px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #bbb;
+    }
+
+    .transcript-timestamp {
+      position: absolute;
+      left: 0;
+      color: #666;
+      font-size: 11px;
+      font-family: monospace;
+    }
+
+    .transcript-live {
+      background: rgba(184, 247, 111, 0.1);
+      padding: 12px 16px;
+      border-radius: 8px;
+      border-left: 3px solid #b8f76f;
+      margin-left: 56px;
+    }
+
+    .transcript-tabs {
+      display: flex;
+      border-top: 1px solid #333;
+    }
+
+    .transcript-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+
+    .transcript-tab:hover {
+      color: #e5e5e5;
+    }
+
+    .transcript-tab.active {
+      color: #b8f76f;
+      border-bottom-color: #b8f76f;
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      background: #252525;
+      border-top: 1px solid #333;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+    }
+
+    .bottom-left {
+      display: flex;
+      gap: 4px;
+    }
+
+    .bottom-btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bottom-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .bottom-btn.active {
+      background: rgba(184, 247, 111, 0.15);
+      color: #b8f76f;
+    }
+
+    .bottom-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .record-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ef4444;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    .record-btn.idle {
+      background: #b8f76f;
+      color: #1a1a1a;
+      box-shadow: 0 2px 8px rgba(184, 247, 111, 0.3);
+    }
+
+    .bottom-right {
+      display: flex;
+      gap: 4px;
+    }
+
+    /* Label */
+    .layout-label {
+      position: fixed;
+      top: 64px;
+      right: 400px;
+      background: #b8f76f;
+      color: #1a1a1a;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 100;
+    }
+
+    /* Focus mode variant info */
+    .mode-info {
+      position: fixed;
+      bottom: 70px;
+      left: 300px;
+      background: #333;
+      color: #bbb;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      max-width: 280px;
+      line-height: 1.5;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .mode-info strong {
+      color: #b8f76f;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="titlebar-center">
+        <div class="nav-btn">◀</div>
+        <div class="breadcrumb">
+          <span class="breadcrumb-item">Work</span>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-item">Meetings</span>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-item active">Team Sync</span>
+        </div>
+        <div class="nav-btn">▶</div>
+      </div>
+      <div class="titlebar-right">
+        <div class="record-indicator">
+          <div class="record-dot"></div>
+          Recording 05:23
+        </div>
+        <div class="titlebar-btn">···</div>
+        <div class="window-controls">
+          <div class="window-btn minimize"></div>
+          <div class="window-btn maximize"></div>
+          <div class="window-btn close"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Left panel - Binders -->
+      <div class="side-panel">
+        <div class="panel-header">
+          <span class="panel-title">Binders</span>
+          <div class="panel-close">×</div>
+        </div>
+        <div class="panel-content">
+          <div class="binder-group">
+            <div class="binder-item">
+              <span class="binder-icon">📄</span>
+              <span>All Notes</span>
+              <span class="binder-badge">45</span>
+            </div>
+            <div class="binder-item">
+              <span class="binder-icon">📅</span>
+              <span>Today</span>
+              <span class="binder-badge">3</span>
+            </div>
+            <div class="binder-item">
+              <span class="binder-icon">⭐</span>
+              <span>Starred</span>
+              <span class="binder-badge">8</span>
+            </div>
+          </div>
+
+          <div class="binder-group">
+            <div class="binder-item active">
+              <span class="binder-icon">📁</span>
+              <span>Work</span>
+              <span class="binder-badge">12</span>
+            </div>
+            <div class="binder-children">
+              <div class="note-link active">Meetings</div>
+              <div class="note-link">Projects</div>
+              <div class="note-link">Planning</div>
+            </div>
+          </div>
+
+          <div class="binder-group">
+            <div class="binder-item">
+              <span class="binder-icon">📁</span>
+              <span>Personal</span>
+              <span class="binder-badge">8</span>
+            </div>
+          </div>
+
+          <div class="binder-group">
+            <div class="binder-item">
+              <span class="binder-icon">📁</span>
+              <span>Research</span>
+              <span class="binder-badge">5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor area -->
+      <div class="editor-area">
+        <div class="editor">
+          <input type="text" class="editor-title" value="Team Sync - January 23">
+          <div class="editor-meta">
+            <span>📁 Work / Meetings</span>
+            <span>Today at 10:00 AM</span>
+            <span>1,234 words</span>
+          </div>
+          <div class="editor-content">
+            <p>Quick sync with the team to review Q1 progress and upcoming milestones. Everyone present and engaged in the discussion.</p>
+
+            <h2>Attendees</h2>
+            <ul>
+              <li>Sarah Chen (Engineering Lead)</li>
+              <li>Mike Roberts (Product)</li>
+              <li>Alex Kim (Design)</li>
+              <li>Jordan Lee (QA)</li>
+            </ul>
+
+            <h2>Key Decisions</h2>
+            <ul>
+              <li>Moving forward with TypeScript migration - targeting 100% by end of Q1</li>
+              <li>New CI/CD pipeline approved for next sprint</li>
+              <li>Design review scheduled for Friday</li>
+            </ul>
+
+            <h2>Action Items</h2>
+            <ul>
+              <li>☐ Sarah: Draft API spec by Friday</li>
+              <li>☐ Mike: Update product roadmap</li>
+              <li>☐ Alex: Finalize component library</li>
+              <li>☐ Jordan: Set up E2E test suite</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right panel - Transcription -->
+      <div class="right-panel">
+        <div class="transcript-header">
+          <div class="transcript-status">
+            <div class="record-dot"></div>
+            <span class="transcript-title">Live Transcription</span>
+          </div>
+          <span class="transcript-time">05:23</span>
+          <div class="transcript-actions">
+            <div class="transcript-btn">✨</div>
+            <div class="transcript-btn">📋</div>
+            <div class="transcript-btn">×</div>
+          </div>
+        </div>
+        <div class="transcript-content">
+          <div class="transcript-line">
+            <span class="transcript-timestamp">[00:00]</span>
+            "Alright everyone, let's get started with our weekly sync. First up, I want to review where we are on the TypeScript migration."
+          </div>
+          <div class="transcript-line">
+            <span class="transcript-timestamp">[00:45]</span>
+            "Thanks Sarah. The migration is going well - we've converted about 60% of the core modules. The main blocker right now is the API layer."
+          </div>
+          <div class="transcript-line">
+            <span class="transcript-timestamp">[02:15]</span>
+            "Mike, can you walk us through the product timeline? We need to make sure the migration doesn't impact our Q1 deliverables."
+          </div>
+          <div class="transcript-line">
+            <span class="transcript-timestamp">[03:30]</span>
+            "Sure thing. The product roadmap has some flexibility built in. We can absorb a one-week delay if needed."
+          </div>
+          <div class="transcript-live">
+            "The main concern is making sure we have enough buffer for testing. I'd recommend we add an extra sprint before the release window to ensure quality..."
+          </div>
+        </div>
+        <div class="transcript-tabs">
+          <div class="transcript-tab active">Transcript</div>
+          <div class="transcript-tab">Summary</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="bottom-bar">
+      <div class="bottom-left">
+        <div class="bottom-btn active">☰ Binders</div>
+        <div class="bottom-btn">🏷️ Tags</div>
+      </div>
+      <div class="bottom-center">
+        <button class="record-btn">⏹</button>
+      </div>
+      <div class="bottom-right">
+        <div class="bottom-btn active">📜 Transcript</div>
+        <div class="bottom-btn">💡 Summary</div>
+      </div>
+    </div>
+
+    <div class="layout-label">Layout D: Focus Mode</div>
+
+    <div class="mode-info">
+      <strong>Contextual Panels:</strong> Left and right panels slide in from the edges. Toggle them with the bottom bar buttons. In <strong>default focus mode</strong>, the editor fills the entire space.
+    </div>
+  </div>
+</body>
+</html>

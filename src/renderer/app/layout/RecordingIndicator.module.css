@@ -1,0 +1,36 @@
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  -webkit-app-region: no-drag;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-error, #ef4444);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.time {
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-error, #ef4444);
+  letter-spacing: 0.02em;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+}

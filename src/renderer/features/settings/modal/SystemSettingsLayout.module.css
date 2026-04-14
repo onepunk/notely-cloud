@@ -1,0 +1,135 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  height: 100%;
+  min-height: 0;
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-sidebar);
+  border-radius: var(--radius-lg);
+  /* border: 1px solid var(--stroke); REMOVED TO TEST CACHING */
+  overflow-x: auto;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  /* Add box-shadow to transition for consistency */
+  transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+  font-weight: var(--font-weight-medium);
+  background: transparent;
+  text-align: center;
+  white-space: nowrap;
+  /* Fixed width to prevent shifting */
+  flex: 0 0 auto;
+  min-width: 70px;
+  /* CRITICAL: Always have a box-shadow (transparent when inactive) to maintain dimensions */
+  box-shadow: inset 0 0 0 1px transparent;
+}
+
+.navItem:hover {
+  /* Match sidebar hover styling */
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  /* Maintain the transparent box-shadow on hover to prevent dimension changes */
+  box-shadow: inset 0 0 0 1px transparent;
+}
+
+.navItemActive {
+  background: rgb(var(--brand-rgb) / 18%);
+  color: var(--text-primary);
+  /* Active state just changes the color, not the dimensions */
+  box-shadow: inset 0 0 0 1px rgb(var(--brand-rgb) / 35%);
+}
+
+.navItemActive:hover {
+  /* Slightly darker background on hover for active state */
+  background: rgb(var(--brand-rgb) / 22%);
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px rgb(var(--brand-rgb) / 35%);
+}
+
+.content-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 10px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--stroke);
+  background: var(--bg-container);
+  box-shadow: 0 10px 24px rgb(15 23 42 / 8%);
+}
+
+.content-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--spacing-xl);
+}
+
+.footer {
+  border-top: 1px solid var(--stroke);
+  padding: var(--spacing-md) var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+  background: var(--bg-subtle);
+}
+
+.footer-left {
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.footer-success {
+  color: #3bb273;
+}
+
+.footer-error {
+  color: #d13438;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    gap: var(--spacing-md);
+  }
+
+  .content-shell {
+    border-radius: var(--radius-lg);
+  }
+}
+
+@media (max-width: 720px) {
+  .content-shell {
+    border-radius: var(--radius-sm);
+  }
+
+  .content-scroll {
+    padding: var(--spacing-lg);
+  }
+
+  .footer {
+    padding: var(--spacing-md);
+  }
+}

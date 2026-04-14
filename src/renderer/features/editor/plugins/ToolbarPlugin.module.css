@@ -1,0 +1,256 @@
+.toolbarWrapper {
+  display: flex;
+  width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 0;
+  background: transparent;
+  width: 100%;
+  flex-wrap: nowrap;
+  overflow: visible;
+}
+
+.toolbarButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.toolbarButton:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.toolbarButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.toolbarButton:disabled:hover {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.toolbarButton.active {
+  background: rgba(127, 98, 255, 0.12);
+  color: var(--text-primary);
+}
+
+.toolbarButtonWide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 120px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid var(--stroke);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  font-size: 13px;
+}
+
+.toolbarButtonWide:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.buttonLabel {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.dropdownContainer {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1000;
+  min-width: 160px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  opacity: 1;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: background-color 0.15s ease;
+}
+
+.dropdownItem:hover {
+  background: var(--bg-hover);
+}
+
+.dropdownItem svg {
+  flex-shrink: 0;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: var(--stroke);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* Overflow Menu Styles */
+.overflowMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 1000;
+  min-width: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  opacity: 1;
+}
+
+.overflowMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: background-color 0.15s ease;
+}
+
+.overflowMenuItem:hover {
+  background: var(--bg-hover);
+}
+
+.overflowMenuItem svg {
+  flex-shrink: 0;
+}
+
+.overflowMenuItem span {
+  flex: 1;
+}
+
+.overflowDivider {
+  height: 1px;
+  background: var(--stroke);
+  margin: 4px 0;
+}
+
+/* Font Size Group Styles */
+.fontSizeGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fontSizeInput {
+  width: 50px;
+  height: 26px;
+  padding: 0 6px;
+  border: 1px solid var(--stroke);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-radius: 4px;
+  font-size: 13px;
+  text-align: center;
+  transition: border-color 0.15s ease;
+}
+
+.fontSizeInput:focus {
+  outline: none;
+  border-color: var(--text-secondary);
+}
+
+.fontSizeInput::-webkit-inner-spin-button,
+.fontSizeInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Color Dropdown Styles */
+.colorDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  opacity: 1;
+}
+
+.colorButton {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--stroke);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 0;
+}
+
+.colorButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown Divider */
+.dropdownDivider {
+  height: 1px;
+  background: var(--stroke);
+  margin: 4px 0;
+}

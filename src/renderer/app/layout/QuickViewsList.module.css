@@ -1,0 +1,96 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.itemWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.item.active {
+  background: var(--bg-active);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.item.active:hover {
+  background: var(--bg-active-hover);
+}
+
+/* Highlight when dragging a note over a droppable view */
+.item.dragOver {
+  background: var(--bg-hover);
+  outline: 2px dashed var(--text-tertiary, #666);
+  outline-offset: -2px;
+}
+
+.label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actionButton {
+  margin-left: calc(16px + var(--spacing-sm) + var(--spacing-md));
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.actionButton:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--stroke-hover);
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .item.active {
+  background: var(--bg-active);
+}

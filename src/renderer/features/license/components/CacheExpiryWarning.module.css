@@ -1,0 +1,147 @@
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: var(--bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bannerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.message {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+/* Modal styles */
+.modalSurface {
+  max-width: 600px;
+  min-width: 500px;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.modalIcon {
+  color: var(--color-warning);
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.expiredInfo {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-warning-bg, #fff8e1);
+  border: 1px solid var(--color-warning, #f59e0b);
+  border-radius: var(--radius-sm);
+}
+
+.warningIcon {
+  color: var(--color-warning);
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.expiredText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.primaryText {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+.secondaryText {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.instructions {
+  padding: var(--spacing-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-sm);
+}
+
+.instructions h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.instructions ol {
+  margin: 0;
+  padding-left: var(--spacing-lg);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.instructions li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.instructions li:last-child {
+  margin-bottom: 0;
+}
+
+/* Warning level specific styling */
+[data-warning-level="approaching"] {
+  border-bottom: 2px solid var(--color-info);
+}
+
+[data-warning-level="today"] {
+  border-bottom: 2px solid var(--color-warning);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .modalSurface {
+    min-width: 90vw;
+    max-width: 90vw;
+  }
+
+  .expiredInfo {
+    flex-direction: column;
+  }
+
+  .bannerContent {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

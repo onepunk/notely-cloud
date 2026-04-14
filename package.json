@@ -1,0 +1,239 @@
+{
+  "name": "notely-cloud",
+  "private": false,
+  "version": "1.0.6",
+  "description": "Notely - A privacy-first, cross-platform, in-person transcription note-taker with AI summary capabilities",
+  "author": {
+    "name": "Notely",
+    "email": "support@example.com"
+  },
+  "homepage": "https://yourdomain.com",
+  "license": "Apache-2.0",
+  "main": "dist-electron/main.cjs",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build && vite build --config vite.main.config.ts && vite build --config vite.preload.config.ts && node scripts/verify-main-build.cjs && node scripts/obfuscate.cjs && node scripts/compile-bytecode.cjs",
+    "verify-build": "node scripts/verify-main-build.cjs",
+    "start": "electron .",
+    "electron:rebuild": "electron-rebuild",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "build:linux:signed": "electron-builder --linux && ./scripts/sign-linux-packages.sh",
+    "sign:linux": "./scripts/sign-linux-packages.sh",
+    "gpg:keygen": "./scripts/gpg-keygen.sh",
+    "lint:css": "stylelint \"src/**/*.css\"",
+    "lint:ts": "eslint . --ext .ts,.tsx --max-warnings=0",
+    "lint": "npm run lint:ts",
+    "format": "prettier --write .",
+    "typecheck:base": "tsc -p tsconfig.json --noEmit",
+    "typecheck:strict": "tsc -p tsconfig.sync.json --noEmit",
+    "typecheck": "npm run typecheck:base",
+    "prepare": "husky",
+    "postinstall": "electron-builder install-app-deps",
+    "release": "standard-version",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:dry": "standard-version --dry-run",
+    "release:notes": "node scripts/generate-release-notes.cjs"
+  },
+  "build": {
+    "appId": "com.notely.desktop",
+    "productName": "Notely",
+    "icon": "build/icon",
+    "afterPack": "./scripts/afterPack.cjs",
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/better-sqlite3-multiple-ciphers/**"
+    ],
+    "files": [
+      "dist/renderer/**",
+      "dist-electron/**",
+      "node_modules/bytenode/**",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "extraResources": [
+      {
+        "from": "resources/logo.png",
+        "to": "logo.png"
+      }
+    ],
+    "publish": {
+      "provider": "generic",
+      "url": "https://get.yourdomain.com/releases/cloud"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "runAfterFinish": true,
+      "artifactName": "Notely_Setup_${version}.${ext}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "requestedExecutionLevel": "asInvoker",
+      "signtoolOptions": {
+        "publisherName": "Notely Limited",
+        "sign": "./scripts/customSign.cjs",
+        "signingHashAlgorithms": [
+          "sha256"
+        ]
+      }
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": false
+    },
+    "linux": {
+      "executableName": "notely",
+      "synopsis": "Privacy-first AI transcription and note-taking",
+      "description": "A privacy-first, cross-platform, in-person transcription note-taker with AI summary capabilities. Record meetings, lectures, and conversations with automatic transcription and intelligent summaries.",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Office"
+    },
+    "deb": {
+      "packageName": "notely",
+      "depends": [
+        "libsecret-1-0",
+        "gnome-keyring"
+      ],
+      "afterInstall": "build/linux-postinst.sh"
+    },
+    "protocols": [
+      {
+        "name": "Notely Protocol",
+        "schemes": [
+          "notely"
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^7.0.2",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@fluentui/react-components": "^9.52.0",
+    "@fluentui/react-icons": "^2.0.261",
+    "@lexical/react": "^0.14.5",
+    "@types/dompurify": "^3.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/ws": "^8.18.1",
+    "archiver": "^7.0.1",
+    "better-sqlite3-multiple-ciphers": "^12.6.0",
+    "bytenode": "^1.5.7",
+    "docx": "^9.5.1",
+    "dompurify": "^3.3.0",
+    "electron-audio-loopback": "^1.0.6",
+    "electron-updater": "^6.7.3",
+    "fuse.js": "^7.0.0",
+    "i18next": "^25.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "lexical": "^0.14.5",
+    "lodash.debounce": "^4.0.8",
+    "lucide-react": "^0.545.0",
+    "pdf-lib": "^1.17.1",
+    "react": "^18.3.1",
+    "react-colorful": "^5.6.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^15.0.1",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^6.23.1",
+    "sonner": "^1.5.0",
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0",
+    "ws": "^8.18.3",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.7.2",
+    "@types/archiver": "^7.0.0",
+    "@types/lodash.debounce": "^4.0.9",
+    "@types/node": "^20.19.13",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "depcheck": "^1.4.7",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.7.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^9.1.4",
+    "javascript-obfuscator": "^4.2.2",
+    "lint-staged": "^15.2.9",
+    "madge": "^8.0.0",
+    "png2icons": "^2.0.1",
+    "postcss": "^8.4.41",
+    "prettier": "^3.3.3",
+    "standard-version": "^9.5.0",
+    "stylelint": "^16.7.0",
+    "stylelint-config-css-modules": "^4.4.0",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.46.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "vite": "^5.4.0",
+    "vite-plugin-electron": "^0.28.7"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
+  }
+}

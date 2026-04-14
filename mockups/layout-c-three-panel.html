@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout C - Three-Panel with Bottom Dock</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e5e5e5;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app {
+      display: grid;
+      grid-template-rows: 44px 1fr 200px;
+      height: 100vh;
+    }
+
+    /* Titlebar */
+    .titlebar {
+      background: #252525;
+      border-bottom: 1px solid #333;
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      align-items: center;
+    }
+
+    .nav-arrows {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .nav-arrow {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .nav-arrow:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      font-size: 13px;
+    }
+
+    .breadcrumb-item {
+      color: #888;
+      cursor: pointer;
+    }
+
+    .breadcrumb-item:hover {
+      color: #e5e5e5;
+    }
+
+    .breadcrumb-item.active {
+      color: #e5e5e5;
+      font-weight: 500;
+    }
+
+    .breadcrumb-sep {
+      color: #555;
+    }
+
+    .titlebar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-right: 12px;
+    }
+
+    .titlebar-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .titlebar-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .btn {
+      background: #333;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: #e5e5e5;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: #b8f76f;
+      color: #1a1a1a;
+      border-color: #b8f76f;
+      font-weight: 500;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 8px;
+      margin-left: 8px;
+    }
+
+    .window-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .window-btn.close { background: #ff5f57; }
+    .window-btn.minimize { background: #ffbd2e; }
+    .window-btn.maximize { background: #28ca41; }
+
+    /* Main content */
+    .main {
+      display: grid;
+      grid-template-columns: 56px 280px 1fr;
+      overflow: hidden;
+    }
+
+    /* Icon rail */
+    .icon-rail {
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+      padding: 12px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.15s;
+    }
+
+    .icon-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .icon-btn.active {
+      background: rgba(184, 247, 111, 0.15);
+      color: #b8f76f;
+    }
+
+    .icon-divider {
+      width: 24px;
+      height: 1px;
+      background: #333;
+      margin: 8px 0;
+    }
+
+    .icon-rail-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Notes list */
+    .notes-list {
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .notes-header {
+      padding: 16px;
+      border-bottom: 1px solid #333;
+    }
+
+    .notes-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .notes-search {
+      background: #2a2a2a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: #e5e5e5;
+      width: 100%;
+      font-size: 13px;
+    }
+
+    .notes-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .note-card {
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+
+    .note-card:hover {
+      background: #2a2a2a;
+    }
+
+    .note-card.active {
+      background: rgba(184, 247, 111, 0.12);
+      border-left: 3px solid #b8f76f;
+    }
+
+    .note-card-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .note-card-title .icon {
+      font-size: 14px;
+    }
+
+    .transcription-badge {
+      width: 6px;
+      height: 6px;
+      background: #b8f76f;
+      border-radius: 50%;
+    }
+
+    .note-card-meta {
+      font-size: 11px;
+      color: #666;
+      display: flex;
+      gap: 8px;
+    }
+
+    .note-card-preview {
+      font-size: 12px;
+      color: #888;
+      margin-top: 8px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Editor */
+    .editor-area {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid #333;
+      gap: 4px;
+      background: #1f1f1f;
+    }
+
+    .toolbar-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .toolbar-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 20px;
+      background: #333;
+      margin: 0 8px;
+    }
+
+    .editor-scroll {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .editor {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .editor-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+      border: none;
+      background: transparent;
+      width: 100%;
+      outline: none;
+    }
+
+    .editor-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .editor-content {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #ccc;
+    }
+
+    .editor-content h2 {
+      font-size: 18px;
+      color: #fff;
+      margin: 24px 0 12px 0;
+    }
+
+    .editor-content ul {
+      margin-left: 20px;
+    }
+
+    .editor-content li {
+      margin: 8px 0;
+    }
+
+    /* Bottom dock */
+    .bottom-dock {
+      background: #1f1f1f;
+      border-top: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .dock-header {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      height: 44px;
+      border-bottom: 1px solid #333;
+      background: #252525;
+    }
+
+    .dock-tabs {
+      display: flex;
+      gap: 4px;
+    }
+
+    .dock-tab {
+      padding: 8px 16px;
+      border-radius: 6px 6px 0 0;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dock-tab:hover {
+      color: #e5e5e5;
+    }
+
+    .dock-tab.active {
+      background: #1f1f1f;
+      color: #e5e5e5;
+    }
+
+    .recording-dot {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .dock-time {
+      font-size: 12px;
+      color: #888;
+      font-family: monospace;
+      margin-left: 12px;
+    }
+
+    .dock-actions {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .dock-btn {
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dock-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .dock-btn-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .dock-btn-icon:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .dock-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .transcript-section {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #bbb;
+    }
+
+    .transcript-line {
+      margin-bottom: 12px;
+      padding-left: 60px;
+      position: relative;
+    }
+
+    .transcript-time {
+      position: absolute;
+      left: 0;
+      color: #666;
+      font-size: 11px;
+      font-family: monospace;
+    }
+
+    .transcript-live {
+      background: rgba(184, 247, 111, 0.1);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid #b8f76f;
+      margin-left: 60px;
+    }
+
+    .summary-section {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #bbb;
+      border-left: 1px solid #333;
+      padding-left: 24px;
+    }
+
+    .summary-heading {
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .summary-list {
+      margin-bottom: 16px;
+    }
+
+    .summary-item {
+      margin: 6px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .summary-item:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #b8f76f;
+    }
+
+    .dock-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border-top: 1px solid #333;
+      background: #252525;
+      gap: 16px;
+    }
+
+    .record-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ef4444;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    .record-label {
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* Label */
+    .layout-label {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      background: #b8f76f;
+      color: #1a1a1a;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="nav-arrows">
+        <div class="nav-arrow">◀</div>
+        <div class="nav-arrow">▶</div>
+      </div>
+      <div class="breadcrumb">
+        <span class="breadcrumb-item">📁 Work</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Meetings</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Team Sync</span>
+      </div>
+      <div class="titlebar-right">
+        <div class="titlebar-btn">🔍</div>
+        <button class="btn btn-primary">+</button>
+        <div class="titlebar-btn">📋</div>
+        <div class="titlebar-btn">⚙️</div>
+        <div class="window-controls">
+          <div class="window-btn minimize"></div>
+          <div class="window-btn maximize"></div>
+          <div class="window-btn close"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Icon rail -->
+      <div class="icon-rail">
+        <div class="icon-btn active">🏠</div>
+        <div class="icon-divider"></div>
+        <div class="icon-btn">📁</div>
+        <div class="icon-divider"></div>
+        <div class="icon-btn">📅</div>
+        <div class="icon-divider"></div>
+        <div class="icon-btn">⭐</div>
+        <div class="icon-divider"></div>
+        <div class="icon-btn">🗄️</div>
+        <div class="icon-divider"></div>
+        <div class="icon-btn">🗑️</div>
+        <div class="icon-rail-bottom">
+          <div class="icon-divider"></div>
+          <div class="icon-btn">⚙️</div>
+        </div>
+      </div>
+
+      <!-- Notes list -->
+      <div class="notes-list">
+        <div class="notes-header">
+          <div class="notes-title">Notes</div>
+          <input type="text" class="notes-search" placeholder="Filter notes...">
+        </div>
+        <div class="notes-scroll">
+          <div class="note-card active">
+            <div class="note-card-title">
+              <span class="icon">📄</span>
+              Team Sync - Jan 23
+              <span class="transcription-badge"></span>
+            </div>
+            <div class="note-card-meta">
+              <span>Today</span>
+              <span>1,234 words</span>
+            </div>
+            <div class="note-card-preview">Quick sync with the team to review Q1 progress and upcoming milestones...</div>
+          </div>
+          <div class="note-card">
+            <div class="note-card-title">
+              <span class="icon">📄</span>
+              Sprint Planning
+              <span class="transcription-badge"></span>
+            </div>
+            <div class="note-card-meta">
+              <span>2 days ago</span>
+              <span>856 words</span>
+            </div>
+            <div class="note-card-preview">Planning session for the upcoming sprint cycle...</div>
+          </div>
+          <div class="note-card">
+            <div class="note-card-title">
+              <span class="icon">📄</span>
+              1:1 with Sarah
+            </div>
+            <div class="note-card-meta">
+              <span>3 days ago</span>
+              <span>423 words</span>
+            </div>
+            <div class="note-card-preview">Discussed career growth and team dynamics...</div>
+          </div>
+          <div class="note-card">
+            <div class="note-card-title">
+              <span class="icon">📄</span>
+              Product Review
+              <span class="transcription-badge"></span>
+            </div>
+            <div class="note-card-meta">
+              <span>1 week ago</span>
+              <span>2,100 words</span>
+            </div>
+            <div class="note-card-preview">Quarterly product review meeting with stakeholders...</div>
+          </div>
+          <div class="note-card">
+            <div class="note-card-title">
+              <span class="icon">📄</span>
+              Design Review
+            </div>
+            <div class="note-card-meta">
+              <span>1 week ago</span>
+              <span>567 words</span>
+            </div>
+            <div class="note-card-preview">Feedback on the new component library designs...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor -->
+      <div class="editor-area">
+        <div class="editor-toolbar">
+          <div class="toolbar-btn">B</div>
+          <div class="toolbar-btn">I</div>
+          <div class="toolbar-btn">U</div>
+          <div class="toolbar-divider"></div>
+          <div class="toolbar-btn">H1</div>
+          <div class="toolbar-btn">H2</div>
+          <div class="toolbar-divider"></div>
+          <div class="toolbar-btn">•</div>
+          <div class="toolbar-btn">1.</div>
+          <div class="toolbar-btn">✓</div>
+          <div class="toolbar-divider"></div>
+          <div class="toolbar-btn">" "</div>
+          <div class="toolbar-btn">&lt;/&gt;</div>
+        </div>
+        <div class="editor-scroll">
+          <div class="editor">
+            <input type="text" class="editor-title" value="Team Sync - January 23">
+            <div class="editor-meta">
+              <span>📁 Work / Meetings</span>
+              <span>Today at 10:00 AM</span>
+              <span>1,234 words</span>
+            </div>
+            <div class="editor-content">
+              <p>Quick sync with the team to review Q1 progress and upcoming milestones.</p>
+
+              <h2>Attendees</h2>
+              <ul>
+                <li>Sarah Chen (Engineering Lead)</li>
+                <li>Mike Roberts (Product)</li>
+                <li>Alex Kim (Design)</li>
+                <li>Jordan Lee (QA)</li>
+              </ul>
+
+              <h2>Key Decisions</h2>
+              <ul>
+                <li>Moving forward with TypeScript migration</li>
+                <li>New CI/CD pipeline approved for next sprint</li>
+              </ul>
+
+              <h2>Action Items</h2>
+              <ul>
+                <li>☐ Sarah: Draft API spec by Friday</li>
+                <li>☐ Mike: Update product roadmap</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom dock -->
+    <div class="bottom-dock">
+      <div class="dock-header">
+        <div class="dock-tabs">
+          <div class="dock-tab active">
+            <div class="recording-dot"></div>
+            Transcription
+          </div>
+          <div class="dock-tab">Summary</div>
+        </div>
+        <span class="dock-time">●REC 05:23</span>
+        <div class="dock-actions">
+          <div class="dock-btn">✨ Refine</div>
+          <div class="dock-btn">📋 Copy</div>
+          <div class="dock-btn-icon">↗</div>
+          <div class="dock-btn-icon">×</div>
+        </div>
+      </div>
+      <div class="dock-content">
+        <div class="transcript-section">
+          <div class="transcript-line">
+            <span class="transcript-time">[00:00]</span>
+            "Alright everyone, let's get started with our weekly sync. First up, I want to review where we are on the TypeScript migration."
+          </div>
+          <div class="transcript-line">
+            <span class="transcript-time">[00:45]</span>
+            "Thanks Sarah. The migration is going well - we've converted about 60% of the core modules."
+          </div>
+          <div class="transcript-line">
+            <span class="transcript-time">[02:15]</span>
+            "Mike, can you walk us through the product timeline?"
+          </div>
+          <div class="transcript-live">
+            <span class="transcript-time">[05:20]</span>
+            "The main concern is making sure we have enough buffer for testing..."
+          </div>
+        </div>
+        <div class="summary-section">
+          <div class="summary-heading">Key Topics</div>
+          <div class="summary-list">
+            <div class="summary-item">TypeScript migration progress (60% complete)</div>
+            <div class="summary-item">Q1 product timeline review</div>
+            <div class="summary-item">Testing buffer requirements</div>
+          </div>
+          <div class="summary-heading">Action Items</div>
+          <div class="summary-list">
+            <div class="summary-item">Sarah: Finalize API contracts by Friday</div>
+            <div class="summary-item">Mike: Update roadmap with buffer time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout-label">Layout C: Three-Panel + Dock</div>
+  </div>
+</body>
+</html>

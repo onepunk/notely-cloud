@@ -1,0 +1,41 @@
+# Notely Desktop v2 CODEOWNERS
+# This file defines ownership rules for different parts of the codebase
+# See: https://help.github.com/articles/about-codeowners/
+
+# Global fallback - all files require review by at least one team member
+* @anthropics/notely-desktop
+
+# Critical Infrastructure - Requires admin review
+/.github/ @anthropics/notely-admin
+/scripts/ @anthropics/notely-admin
+/build/ @anthropics/notely-admin
+/electron-builder.json5 @anthropics/notely-admin
+
+# Sync System - Requires sync team review due to data integrity concerns
+/src/main/sync/ @anthropics/notely-sync @anthropics/notely-desktop
+/src/main/ipc/SyncVersionHandlers.ts @anthropics/notely-sync @anthropics/notely-desktop
+/src/main/storage/migrations/migrations/005_sync_metadata.ts @anthropics/notely-sync @anthropics/notely-admin
+
+# Storage & Database - Requires admin review for data safety
+/src/main/storage/migrations/ @anthropics/notely-admin
+/src/main/storage/core/ @anthropics/notely-admin
+
+# Security-sensitive files - Requires security team review
+/src/main/managers/AuthManager.ts @anthropics/notely-security
+/src/main/storage/core/KeyManager.ts @anthropics/notely-security
+/src/main/services/AuthValidationService.ts @anthropics/notely-security
+/src/main/utils/oauth-state.ts @anthropics/notely-security
+/src/main/utils/pkce.ts @anthropics/notely-security
+
+# IPC Handlers - Requires desktop team review for security
+/src/main/ipc/ @anthropics/notely-desktop
+/src/preload/ @anthropics/notely-desktop
+
+# Transcription & AI - Requires AI team review
+/src/main/transcription/ @anthropics/notely-ai
+/src/main/transcriptionServer.ts @anthropics/notely-ai
+/src/main/ipc/TranscriptionHandlers.ts @anthropics/notely-ai
+
+# Performance-critical paths - Requires performance team review  
+/src/main/storage/core/DatabaseManager.ts @anthropics/notely-performance
+/src/renderer/shared/state/ @anthropics/notely-performance

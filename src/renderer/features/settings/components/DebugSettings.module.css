@@ -1,0 +1,87 @@
+.sectionStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.modelStatus {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs, 4px);
+}
+
+.statusLoading {
+  color: var(--colorBrandBackground, #0f6cbd);
+}
+
+.statusSuccess {
+  color: var(--colorPaletteGreenForeground1, #107c10);
+}
+
+.statusError {
+  color: var(--colorPaletteRedForeground1, #ca5010);
+}
+
+.spinnerRow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--text-secondary);
+}
+
+.noModels {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.hintText {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.inputStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md, 16px);
+  max-width: 360px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs, 8px);
+}
+
+.inputLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.inputField {
+  width: 100%;
+}
+
+.inputDescription {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.unit {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.saveIndicator {
+  color: var(--text-secondary);
+}

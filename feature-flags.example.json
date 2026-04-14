@@ -1,0 +1,6 @@
+{
+  "useV3SyncMicroservice": false,
+  "enableSyncTelemetry": true,
+  "enableV3Fallback": true,
+  "featureFlagRefreshIntervalMs": 300000
+}

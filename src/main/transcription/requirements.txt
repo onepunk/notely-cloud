@@ -1,0 +1,16 @@
+fastapi>=0.104.0
+uvicorn>=0.24.0
+websockets>=11.0
+python-multipart>=0.0.9
+torch>=2.0.0
+numpy>=1.24.0
+
+# faster-whisper engine
+faster-whisper>=1.0.0
+ctranslate2>=3.20.0
+soundfile>=0.12.0
+
+# Performance and testing
+jiwer>=3.0.0
+psutil>=5.9.0
+scipy>=1.10.0

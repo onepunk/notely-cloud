@@ -1,0 +1,28 @@
+/* Custom dropdown styling that follows system theme */
+.dropdown {
+  width: 100%;
+  background-color: var(--bg-container) !important;
+  border: 1px solid var(--stroke) !important;
+  color: var(--text-primary) !important;
+}
+
+.dropdown:hover {
+  background-color: var(--bg-hover) !important;
+  border-color: var(--stroke) !important;
+}
+
+.dropdown:focus {
+  border-color: var(--text-tertiary) !important;
+  outline: none !important;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .dropdown {
+    background-color: var(--bg-subtle) !important;
+  }
+
+  .dropdown:hover {
+    background-color: var(--bg-hover) !important;
+  }
+}

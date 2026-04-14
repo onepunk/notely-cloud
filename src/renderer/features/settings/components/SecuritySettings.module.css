@@ -1,0 +1,137 @@
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statusIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--colorNeutralBackground3);
+}
+
+.enabledIcon {
+  color: var(--colorPaletteGreenForeground1);
+}
+
+.disabledIcon {
+  color: var(--colorNeutralForeground3);
+}
+
+.statusActions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.metaText {
+  color: var(--colorNeutralForeground3);
+  margin-top: 8px;
+}
+
+.rememberRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.rememberInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.warningBar {
+  margin-bottom: 12px;
+}
+
+.recoveryActions {
+  margin-top: 8px;
+}
+
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+/* Dialog styling to match Settings modal */
+.dialogSurface {
+  background: var(--bg-sidebar, var(--colorNeutralBackground1)) !important;
+  color: var(--text-primary, var(--colorNeutralForeground1)) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16) !important;
+  max-width: 520px !important;
+  width: 100% !important;
+}
+
+/* Ensure MessageBar text wraps properly in dialogs */
+.dialogContent :global(.fui-MessageBar) {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.dialogContent :global(.fui-MessageBarBody) {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.dialogTitle {
+  font-size: var(--font-size-lg, 18px) !important;
+  font-weight: 600 !important;
+  color: var(--text-primary, var(--colorNeutralForeground1)) !important;
+  letter-spacing: -0.01em;
+}
+
+.recoveryLoading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.recoveryKeyBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: var(--colorNeutralBackground3);
+  border-radius: 8px;
+  border: 1px solid var(--colorNeutralStroke1);
+}
+
+.recoveryKeyText {
+  font-family: monospace;
+  font-size: 12px;
+  word-break: break-all;
+  line-height: 1.6;
+  color: var(--colorNeutralForeground1);
+}
+
+.recoveryKeyActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Ensure hint text in dialogs wraps properly */
+.dialogContent > :global(.fui-Text) {
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.5;
+}

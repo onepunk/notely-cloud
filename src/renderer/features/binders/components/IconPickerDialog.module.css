@@ -1,0 +1,53 @@
+/* Dialog theming */
+.dialog-surface {
+  background: var(--bg-container) !important;
+  color: var(--text-primary) !important;
+  min-width: 550px;
+  max-width: 600px;
+}
+
+.dialog-title {
+  color: var(--text-primary) !important;
+}
+
+.dialog-content {
+  color: var(--text-primary) !important;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Icon grid */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Icon buttons */
+.icon-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  border: 1px solid var(--stroke-light, rgb(0 0 0 / 12%));
+  background: var(--bg, #fff);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  color: var(--text-primary);
+}
+
+.icon-button:hover {
+  background: var(--bg-hover, #f5f5f5);
+  border-color: var(--stroke, rgb(0 0 0 / 20%));
+  transform: scale(1.08);
+}
+
+.icon-button:active {
+  transform: scale(0.95);
+}

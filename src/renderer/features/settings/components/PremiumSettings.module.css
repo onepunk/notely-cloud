@@ -1,0 +1,209 @@
+/* Premium Settings - Modern Minimal Design */
+
+.messageBar {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Sync Card */
+.syncCard {
+  padding: var(--spacing-md);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke);
+}
+
+.syncToggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.syncInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.syncDesc {
+  color: var(--text-secondary);
+}
+
+/* Sync Status */
+.syncStatus {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--stroke);
+}
+
+.syncStatusRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.syncLabel {
+  color: var(--text-tertiary);
+  min-width: 80px;
+}
+
+.statusConnected {
+  color: #3bb273;
+}
+
+.statusDisconnected {
+  color: var(--text-secondary);
+}
+
+.syncButton {
+  margin-top: var(--spacing-md);
+}
+
+.syncingLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Premium Features */
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.featureCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke);
+  transition: all 0.15s ease;
+}
+
+.featureCard:hover {
+  background: var(--bg-hover);
+}
+
+.featureLocked {
+  opacity: 0.7;
+}
+
+.featureIcon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(var(--brand-rgb) / 15%);
+  color: var(--brand-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.featureLocked .featureIcon {
+  background: var(--bg-hover);
+  color: var(--text-tertiary);
+}
+
+.featureContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.featureHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.featureDesc {
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Feature Badges */
+.enabledBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: rgb(59 178 115 / 15%);
+  color: #3bb273;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.lockedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--bg-hover);
+  color: var(--text-tertiary);
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.comingSoonBadge {
+  display: inline-flex;
+  padding: 2px 8px;
+  background: rgb(var(--brand-rgb) / 12%);
+  color: var(--brand-secondary);
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Unlock Hint */
+.unlockHint {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgb(var(--brand-rgb) / 8%);
+  border-radius: var(--radius-md);
+  border: 1px dashed rgb(var(--brand-rgb) / 30%);
+  text-align: center;
+}
+
+.unlockLink {
+  color: var(--brand-secondary);
+  font-weight: 500;
+  padding: 0;
+  min-width: auto;
+  height: auto;
+}
+
+.unlockLink:hover {
+  text-decoration: underline;
+}
+
+/* Plans Promo */
+.plansPromo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke);
+  text-align: center;
+}
+
+.plansLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--brand-secondary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.plansLink:hover {
+  text-decoration: underline;
+}

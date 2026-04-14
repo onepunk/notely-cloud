@@ -1,0 +1,14 @@
+dist/
+dist-electron/
+build/
+coverage/
+*.config.js
+*.config.ts
+
+# Test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/tests/
+**/test/

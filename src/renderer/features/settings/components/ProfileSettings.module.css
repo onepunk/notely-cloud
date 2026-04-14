@@ -1,0 +1,55 @@
+.identityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.readOnlyNote {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--stroke);
+  line-height: 1.5;
+}
+
+.spinnerRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+.languageFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.footerActions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.status {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  min-height: 20px;
+}
+
+.statusSuccess {
+  color: #3bb273;
+}
+
+.statusError {
+  color: #d13438;
+}
+
+@media (max-width: 640px) {
+  .identityGrid {
+    gap: var(--spacing-md);
+  }
+}

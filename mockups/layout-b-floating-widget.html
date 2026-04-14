@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout B - Floating Transcription Widget</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e5e5e5;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app {
+      display: grid;
+      grid-template-rows: 44px 1fr 52px;
+      height: 100vh;
+    }
+
+    /* Titlebar */
+    .titlebar {
+      background: #252525;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+    }
+
+    .titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .menu-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .search-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search {
+      background: #333;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: #999;
+      width: 400px;
+      font-size: 13px;
+    }
+
+    .titlebar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      background: #333;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 8px 14px;
+      color: #e5e5e5;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: #b8f76f;
+      color: #1a1a1a;
+      border-color: #b8f76f;
+      font-weight: 500;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 8px;
+      margin-left: 8px;
+    }
+
+    .window-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .window-btn.close { background: #ff5f57; }
+    .window-btn.minimize { background: #ffbd2e; }
+    .window-btn.maximize { background: #28ca41; }
+
+    /* Main content */
+    .main {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #1f1f1f;
+      border-right: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-section {
+      padding: 16px;
+      border-bottom: 1px solid #333;
+    }
+
+    .sidebar-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-header-action {
+      color: #888;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: #2a2a2a;
+    }
+
+    .nav-item.active {
+      background: rgba(184, 247, 111, 0.12);
+      color: #b8f76f;
+    }
+
+    .nav-icon {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      font-size: 11px;
+      color: #666;
+      background: #333;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .binder-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #bbb;
+      font-size: 13px;
+    }
+
+    .binder-item:hover {
+      background: #2a2a2a;
+    }
+
+    .binder-item.expanded {
+      color: #fff;
+    }
+
+    .binder-item .arrow {
+      font-size: 10px;
+      color: #666;
+      transition: transform 0.15s;
+    }
+
+    .binder-item.expanded .arrow {
+      transform: rotate(90deg);
+    }
+
+    .binder-children {
+      margin-left: 20px;
+      border-left: 1px solid #333;
+      padding-left: 12px;
+    }
+
+    .note-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .note-item:hover {
+      background: #2a2a2a;
+      color: #ccc;
+    }
+
+    .note-item.active {
+      background: rgba(184, 247, 111, 0.1);
+      color: #b8f76f;
+    }
+
+    .tag-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 16px;
+      cursor: pointer;
+      color: #999;
+      font-size: 12px;
+      background: #2a2a2a;
+      margin: 2px;
+    }
+
+    .tag-item:hover {
+      background: #333;
+      color: #ccc;
+    }
+
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .sidebar-scroll {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    /* Editor area */
+    .editor-area {
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+      overflow-y: auto;
+      background: #1a1a1a;
+      position: relative;
+    }
+
+    .editor {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .editor-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+      border: none;
+      background: transparent;
+      width: 100%;
+      outline: none;
+    }
+
+    .editor-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .editor-meta-tag {
+      background: #2a2a2a;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+
+    .editor-content {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #ccc;
+    }
+
+    .editor-content h2 {
+      font-size: 20px;
+      color: #fff;
+      margin: 32px 0 16px 0;
+      font-weight: 600;
+    }
+
+    .editor-content p {
+      margin-bottom: 16px;
+    }
+
+    .editor-content ul {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    .editor-content li {
+      margin: 10px 0;
+    }
+
+    /* Floating widget */
+    .floating-widget {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      width: 320px;
+      background: #252525;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      border: 1px solid #333;
+      overflow: hidden;
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background: #2a2a2a;
+      border-bottom: 1px solid #333;
+      gap: 10px;
+    }
+
+    .widget-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .recording-dot {
+      width: 10px;
+      height: 10px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .widget-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .widget-time {
+      margin-left: auto;
+      font-size: 12px;
+      color: #888;
+      font-family: monospace;
+    }
+
+    .widget-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .widget-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .widget-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .widget-content {
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #bbb;
+    }
+
+    .widget-live-text {
+      background: rgba(184, 247, 111, 0.1);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid #b8f76f;
+      margin-top: 12px;
+    }
+
+    .widget-footer {
+      display: flex;
+      padding: 8px 16px;
+      border-top: 1px solid #333;
+      gap: 8px;
+    }
+
+    .widget-footer-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+      text-align: center;
+      background: #2a2a2a;
+    }
+
+    .widget-footer-btn:hover {
+      background: #333;
+      color: #e5e5e5;
+    }
+
+    .widget-footer-btn.active {
+      background: rgba(184, 247, 111, 0.15);
+      color: #b8f76f;
+    }
+
+    /* Footer */
+    .footer {
+      background: #252525;
+      border-top: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      gap: 16px;
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .audio-scrubber {
+      width: 200px;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .audio-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 35%;
+      background: #b8f76f;
+      border-radius: 2px;
+    }
+
+    .audio-time {
+      font-size: 11px;
+      color: #888;
+      font-family: monospace;
+    }
+
+    .record-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ef4444;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Label */
+    .layout-label {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      background: #b8f76f;
+      color: #1a1a1a;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <div class="titlebar-left">
+        <div class="menu-btn">☰</div>
+      </div>
+      <div class="search-container">
+        <input type="text" class="search" placeholder="Search Notely...">
+      </div>
+      <div class="titlebar-right">
+        <button class="btn btn-primary">+ New</button>
+        <button class="btn">⚙️</button>
+        <div class="avatar">JD</div>
+        <div class="window-controls">
+          <div class="window-btn minimize"></div>
+          <div class="window-btn maximize"></div>
+          <div class="window-btn close"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-section">
+          <nav>
+            <div class="nav-item active">
+              <span class="nav-icon">📄</span>
+              <span>All Notes</span>
+              <span class="nav-badge">45</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span>Today</span>
+              <span class="nav-badge">3</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">⭐</span>
+              <span>Starred</span>
+              <span class="nav-badge">8</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📥</span>
+              <span>Archived</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">🗑️</span>
+              <span>Trash</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sidebar-scroll">
+          <div class="sidebar-section">
+            <div class="sidebar-header">
+              <span>Binders</span>
+              <span class="sidebar-header-action">+</span>
+            </div>
+            <div class="binder-item expanded">
+              <span class="arrow">▶</span>
+              <span>📁</span>
+              <span>Work</span>
+            </div>
+            <div class="binder-children">
+              <div class="note-item">• Meetings</div>
+              <div class="note-item active">• Team Sync</div>
+              <div class="note-item">• Projects</div>
+            </div>
+            <div class="binder-item">
+              <span class="arrow">▶</span>
+              <span>📁</span>
+              <span>Personal</span>
+            </div>
+            <div class="binder-item">
+              <span class="arrow">▶</span>
+              <span>📁</span>
+              <span>Research</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-header">
+              <span>Tags</span>
+              <span class="sidebar-header-action">+</span>
+            </div>
+            <div class="tags-container">
+              <div class="tag-item">#important</div>
+              <div class="tag-item">#followup</div>
+              <div class="tag-item">#ai-research</div>
+              <div class="tag-item">#meeting</div>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-header">
+              <span>Starred</span>
+            </div>
+            <div class="note-item">📄 Q3 Goals</div>
+            <div class="note-item">📄 Product Vision</div>
+            <div class="note-item">📄 Key Ideas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor -->
+      <div class="editor-area">
+        <div class="editor">
+          <input type="text" class="editor-title" value="Weekly Team Sync">
+          <div class="editor-meta">
+            <span>📁 Work / Meetings</span>
+            <span>Jan 23, 2026</span>
+            <span class="editor-meta-tag">#meeting</span>
+            <span class="editor-meta-tag">#team</span>
+          </div>
+          <div class="editor-content">
+            <p>Quick sync with the team to review Q1 progress and upcoming milestones. Everyone present and engaged.</p>
+
+            <h2>Attendees</h2>
+            <ul>
+              <li>Sarah Chen (Engineering Lead)</li>
+              <li>Mike Roberts (Product)</li>
+              <li>Alex Kim (Design)</li>
+              <li>Jordan Lee (QA)</li>
+            </ul>
+
+            <h2>Key Decisions</h2>
+            <ul>
+              <li>Moving forward with TypeScript migration</li>
+              <li>New CI/CD pipeline approved for next sprint</li>
+              <li>Design review scheduled for Friday</li>
+            </ul>
+
+            <h2>Action Items</h2>
+            <ul>
+              <li>☐ Sarah: Draft API spec by Friday</li>
+              <li>☐ Mike: Update product roadmap</li>
+              <li>☐ Alex: Finalize component library</li>
+              <li>☐ Jordan: Set up E2E test suite</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Floating transcription widget -->
+        <div class="floating-widget">
+          <div class="widget-header">
+            <div class="widget-status">
+              <div class="recording-dot"></div>
+              <span class="widget-title">Live Transcription</span>
+            </div>
+            <span class="widget-time">05:23</span>
+            <div class="widget-actions">
+              <div class="widget-btn">↗</div>
+              <div class="widget-btn">×</div>
+            </div>
+          </div>
+          <div class="widget-content">
+            <p>"...and that's why we need to prioritize the API redesign before the frontend migration."</p>
+            <div class="widget-live-text">
+              "The main concern is making sure we have enough buffer for testing. I'd recommend we add an extra sprint before the release window..."
+            </div>
+          </div>
+          <div class="widget-footer">
+            <div class="widget-footer-btn active">Transcript</div>
+            <div class="widget-footer-btn">Summary</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="audio-controls">
+        <span class="audio-time">02:15</span>
+        <div class="audio-scrubber">
+          <div class="audio-progress"></div>
+        </div>
+        <span class="audio-time">05:23</span>
+      </div>
+      <button class="record-btn">⏹</button>
+    </div>
+
+    <div class="layout-label">Layout B: Floating Widget</div>
+  </div>
+</body>
+</html>

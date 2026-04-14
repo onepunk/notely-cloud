@@ -1,0 +1,185 @@
+.audioPlayer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.loadingText {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.controlButton {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--stroke);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.controlButton:hover {
+  background: var(--bg-container);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.controlButton:active {
+  transform: scale(0.95);
+}
+
+.timeDisplay {
+  font-size: 11px;
+  font-family: var(--font-mono, monospace);
+  color: var(--text-secondary);
+  min-width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.seekBar {
+  --progress: 0%;
+  --playback-green: var(--brand-primary);
+  flex: 1;
+  height: 4px;
+  min-width: 80px;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    var(--playback-green) 0%,
+    var(--playback-green) var(--progress),
+    var(--stroke) var(--progress),
+    var(--stroke) 100%
+  );
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+}
+
+.seekBar::-webkit-slider-thumb {
+  appearance: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.seekBar::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* Volume control container */
+.volumeControl {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Volume popup container */
+.volumePopup {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 12px 8px;
+  background: var(--bg-container);
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+/* Vertical volume slider */
+.volumeBarVertical {
+  --volume-progress: 50%;
+  --playback-green: var(--brand-primary);
+  width: 4px;
+  height: 80px;
+  appearance: none;
+  background: linear-gradient(
+    to top,
+    var(--playback-green) 0%,
+    var(--playback-green) var(--volume-progress),
+    var(--stroke) var(--volume-progress),
+    var(--stroke) 100%
+  );
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  writing-mode: vertical-lr;
+  direction: rtl;
+}
+
+.volumeBarVertical::-webkit-slider-thumb {
+  appearance: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.volumeBarVertical::-webkit-slider-runnable-track {
+  width: 4px;
+  border-radius: 2px;
+}
+
+/* Firefox support */
+.seekBar::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.seekBar::-moz-range-track {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    var(--playback-green) 0%,
+    var(--playback-green) var(--progress),
+    var(--stroke) var(--progress),
+    var(--stroke) 100%
+  );
+  border-radius: 2px;
+}
+
+.volumeBarVertical::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.volumeBarVertical::-moz-range-track {
+  width: 4px;
+  background: linear-gradient(
+    to top,
+    var(--playback-green) 0%,
+    var(--playback-green) var(--volume-progress),
+    var(--stroke) var(--volume-progress),
+    var(--stroke) 100%
+  );
+  border-radius: 2px;
+}

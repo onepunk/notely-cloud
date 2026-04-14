@@ -1,0 +1,58 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.messageBar {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.message {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+/* Warning level specific styling */
+[data-warning-level="info"] .container {
+  border-bottom: 2px solid var(--color-info);
+}
+
+[data-warning-level="warning"] .container {
+  border-bottom: 2px solid var(--color-warning);
+}
+
+[data-warning-level="critical"] .container {
+  border-bottom: 2px solid var(--color-danger);
+}

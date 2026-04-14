@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["src/common/*"],
+      "@shared/*": ["src/renderer/shared/*"],
+      "@features/*": ["src/renderer/features/*"],
+      "@app/*": ["src/renderer/app/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/tests/**"]
+}

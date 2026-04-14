@@ -1,0 +1,82 @@
+.container {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  min-width: 280px;
+  max-width: 320px;
+  box-shadow: var(--shadow16);
+  border: 1px solid var(--colorNeutralStroke1);
+  background-color: var(--colorNeutralBackground1);
+}
+
+.title {
+  display: block;
+}
+
+.description {
+  color: var(--colorNeutralForeground2);
+  display: block;
+  margin-top: 2px;
+}
+
+.dismissButton {
+  min-width: 28px;
+  padding: 4px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 12px 12px 12px;
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.releaseNotes {
+  color: var(--colorNeutralForeground3);
+  line-height: 1.4;
+}
+
+.forceUpdate {
+  padding: 0 12px 12px 12px;
+  font-weight: 500;
+}
+
+.progressContainer {
+  padding: 0 12px 12px 12px;
+}
+
+.progressBar {
+  width: 100%;
+}
+
+.whatsNewLink {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.whatsNewLink:hover {
+  text-decoration: underline;
+}

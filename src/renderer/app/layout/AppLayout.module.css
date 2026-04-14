@@ -1,0 +1,43 @@
+.root {
+  display: grid;
+  grid-template-rows: 37px 1fr 52px;
+  height: 100vh;
+  min-height: 0;
+  background: var(--titlebar-bg);
+  box-sizing: border-box;
+}
+
+.no-titlebar {
+  grid-template-rows: 1fr 52px;
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  background: var(--bg);
+  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Adjust content margin when left panel is open */
+.content.leftPanelOpen {
+  margin-left: 280px;
+}
+
+.content.rightPanelOpen {
+  margin-right: 340px;
+}

@@ -1,0 +1,51 @@
+.surface {
+  max-width: 480px;
+  min-width: 400px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.icon {
+  color: var(--color-primary);
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.message {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.message p {
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.message p:last-child {
+  margin-bottom: 0;
+}
+
+.actions {
+  margin-top: var(--spacing-md);
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .surface {
+    min-width: 90vw;
+    max-width: 90vw;
+  }
+}

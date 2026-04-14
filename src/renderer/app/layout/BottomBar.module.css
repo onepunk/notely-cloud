@@ -1,0 +1,122 @@
+.footer {
+  width: 100%;
+  background: var(--titlebar-bg);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: 52px;
+  box-sizing: border-box;
+  border-top: 1px solid var(--stroke);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.leftGroup,
+.rightGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.leftGroup {
+  justify-content: flex-start;
+}
+
+.rightGroup {
+  justify-content: flex-end;
+}
+
+.centerGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.toggleButton:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.toggleButton.active {
+  background: rgb(var(--brand-rgb) / 18%);
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px rgb(var(--brand-rgb) / 35%);
+}
+
+.toggleButton.active:hover {
+  background: rgb(var(--brand-rgb) / 22%);
+}
+
+.recordButton {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--brand-primary) !important;
+  color: var(--text-on-brand) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.recordButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(var(--brand-primary-rgb) / 0.4);
+  filter: brightness(0.96);
+}
+
+.recordButton:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.9);
+}
+
+.recordButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.recordButton.recording {
+  background: var(--color-error, #ef4444) !important;
+  color: #fff !important;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.recordButton.recording:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
